@@ -20,14 +20,7 @@ import { RolesGuard } from 'guards/roles.guard';
     UsersModule,
   ],
   controllers: [],
-  //
-  providers: [
-    // {
-    //   provide: APP_GUARD,
-    //   useFactory: (ref) => new RolesGuard(ref),
-    //   inject: [Reflector],
-    // },
-  ],
-  //
+
+  providers: [RolesGuard],
 })
 export class AppModule {}

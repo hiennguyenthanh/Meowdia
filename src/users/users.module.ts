@@ -23,6 +23,6 @@ import { LocalStrategy } from './local.strategy';
       signOptions: { expiresIn: 3600 },
     }),
   ],
-  exports: [JwtStrategy, PassportModule, AuthService],
+  exports: [JwtStrategy, PassportModule, AuthService, UsersService],
 })
 export class UsersModule {}

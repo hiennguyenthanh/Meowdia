@@ -1,15 +1,11 @@
-import {
-  CanActivate,
-  Dependencies,
-  ExecutionContext,
-  Injectable,
-} from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { PostsService } from 'posts/posts.service';
 import { Role } from './roles/role.enum';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private service: any, private reflector: Reflector) {}
+  constructor(private service: PostsService, private reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();
@@ -26,7 +22,16 @@ export class RolesGuard implements CanActivate {
         return userId === user.id;
       }
     }
-    //
+
     return false;
   }
 }
+
+//---------------------@Dependencies + @Inject--------------------------------
+// @Injectable()
+// @Dependencies(Reflector)
+// export class RolesGuard implements CanActivate {
+//   constructor(
+//     @Inject(PostsService) private service: PostsService,
+//     @Inject(Reflector) private reflector: Reflector,
+//   ) {}

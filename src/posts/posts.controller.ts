@@ -15,13 +15,11 @@ import { PostsService } from './posts.service';
 import { Post as _Post } from './post.entity';
 import { Serialize } from 'interceptors/datetime-format.interceptor';
 import { PostDto, FilteredPostDto, UpdatePostDto } from './dto';
-import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'users/get-user.decorator';
 import { User } from 'users/user.entity';
 import { Roles } from 'guards/roles/created-by.decorator';
 import { RolesGuard } from 'guards/roles.guard';
 import { Role } from 'guards/roles/role.enum';
-import { classToPlain, plainToInstance } from 'class-transformer';
 import { JwtAuthGuard } from 'users/jwt-auth.guard';
 
 @Controller('posts')

@@ -9,5 +9,6 @@ import { UsersModule } from 'users/users.module';
   controllers: [PostsController],
   providers: [PostsService],
   imports: [TypeOrmModule.forFeature([Post]), UsersModule],
+  exports: [PostsService], // export for rolesguard
 })
 export class PostsModule {}
