@@ -1,21 +1,16 @@
 import { Transform, Expose } from 'class-transformer';
 import { Post } from '../post.entity';
-import * as moment from 'moment';
-import { User } from 'users/user.entity';
+import { DatetimeFormat } from 'transformers/datetime-format.transformer';
 
 export class PostDto {
   @Expose()
   id: string;
 
-  @Transform(({ obj }: { obj: Post }) =>
-    moment(obj.createdAt).format('MMMM Do YYYY, h:mm:ss a'),
-  )
+  @DatetimeFormat()
   @Expose()
   createdAt: Date;
 
-  @Transform(({ obj }: { obj: Post }) =>
-    moment(obj.updatedAt).format('MMMM Do YYYY, h:mm:ss a'),
-  )
+  @DatetimeFormat()
   @Expose()
   updatedAt: Date;
 

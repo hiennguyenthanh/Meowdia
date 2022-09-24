@@ -8,22 +8,21 @@ import {
   Query,
   UseGuards,
   UnauthorizedException,
-  Request,
 } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostsService } from './posts.service';
 import { Post as _Post } from './post.entity';
-import { Serialize } from 'interceptors/datetime-format.interceptor';
+import { Serialize } from 'interceptors/serialize.interceptor';
 import { PostDto, FilteredPostDto, UpdatePostDto } from './dto';
 import { GetUser } from 'users/get-user.decorator';
 import { User } from 'users/user.entity';
-import { Roles } from 'guards/roles/created-by.decorator';
+import { Roles } from 'decorators/created-by.decorator';
 import { RolesGuard } from 'guards/roles.guard';
-import { Role } from 'guards/roles/role.enum';
-import { JwtAuthGuard } from 'users/jwt-auth.guard';
+import { Role } from 'enum/role.enum';
+import { JwtAuthGuard } from 'guards/jwt-auth.guard';
 
 @Controller('posts')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard) // authentication
 @Serialize(PostDto)
 export class PostsController {
   constructor(private postsService: PostsService) {}
@@ -49,13 +48,12 @@ export class PostsController {
   }
 
   @Patch('/:id')
-  @UseGuards(RolesGuard)
+  @UseGuards(RolesGuard<PostsService>) // authorization
   @Roles(Role.Owner)
   async updateContent(
     @Param('id') id: string,
     @Body() updateContentDto: UpdatePostDto,
     @GetUser() currentUser: User,
-    @Request() req,
   ): Promise<_Post> {
     const post = await this.postsService.getPostById(id);
     // console.log(req.user);

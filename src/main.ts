@@ -9,5 +9,4 @@ async function bootstrap() {
 }
 bootstrap();
 
-// Problem: userId of post is  post id
-// user isn't show in post entity
+// Problem: exception, env

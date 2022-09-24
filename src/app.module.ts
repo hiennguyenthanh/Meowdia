@@ -2,22 +2,30 @@ import { Module } from '@nestjs/common';
 import { PostsModule } from './posts/posts.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
-import { APP_GUARD, Reflector } from '@nestjs/core';
 import { RolesGuard } from 'guards/roles.guard';
-
+import { ConfigModule, ConfigService } from '@nestjs/config';
 @Module({
   imports: [
     PostsModule,
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: '127.0.0.1',
-      username: 'postgres',
-      password: '12345',
-      database: 'Meowdia',
-      synchronize: true,
-      autoLoadEntities: true,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          type: 'postgres',
+          synchronize: true,
+          autoLoadEntities: true,
+          host: configService.get('DB_HOST'),
+          username: configService.get('DB_USERNAME'),
+          password: configService.get('DB_PASSWORD'),
+          database: configService.get('DB_DATABASE'),
+        };
+      },
     }),
     UsersModule,
+    ConfigModule.forRoot({
+      envFilePath: [`.env.stage.${process.env.STAGE}`],
+    }),
   ],
   controllers: [],
 

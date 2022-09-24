@@ -1,10 +1,19 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { PostsService } from 'posts/posts.service';
-import { Role } from './roles/role.enum';
+import { Role } from '../enum/role.enum';
 
+interface IService {
+  findCreated: (id: string) => Promise<string>;
+}
 @Injectable()
-export class RolesGuard implements CanActivate {
+export class RolesGuard<T extends IService> implements CanActivate {
+  // constructor(@Inject<T>() private service: T, private reflector: Reflector) {}
   constructor(private service: PostsService, private reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext) {
@@ -22,7 +31,6 @@ export class RolesGuard implements CanActivate {
         return userId === user.id;
       }
     }
-
     return false;
   }
 }

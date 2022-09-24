@@ -23,4 +23,7 @@ export class Post {
 
   @ManyToOne(() => User, (user) => user.posts)
   user: User;
+
+  // @Column()
+  // status:
 }
