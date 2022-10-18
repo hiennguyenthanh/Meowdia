@@ -4,27 +4,31 @@ import {
   Column,
   CreateDateColumn,
   ManyToOne,
+  OneToMany,
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from 'users/user.entity';
 
 @Entity()
-export class Post {
+export class Comment {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 
   @Column()
   content: string;
 
+  @CreateDateColumn()
+  createAt: Date;
+
+  @UpdateDateColumn()
+  updateAt: Date;
+
   @ManyToOne(() => User, (user) => user.posts)
   user: User;
 
-  // @Column()
-  // status:
+  @OneToMany(() => Comment, (comment: Comment) => comment.parentComment)
+  childComments: Comment[];
+
+  @ManyToOne(() => Comment, (comment: Comment) => comment.childComments)
+  parentComment: Comment;
 }

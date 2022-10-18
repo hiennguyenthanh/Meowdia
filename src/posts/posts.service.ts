@@ -59,9 +59,18 @@ export class PostsService {
 
   async updatePost(id: string, updatePost: UpdatePostDto): Promise<Post> {
     const post = await this.getPostById(id);
-
-    post.content = updatePost.content;
+    post.content = updatePost.updateContent;
     post.updatedAt = new Date();
     return await this.postsRepo.save(post);
+  }
+
+  //test
+  async getPostsByUserId(userId: string): Promise<Post[]> {
+    return this.postsRepo.find({
+      where: { id: userId },
+      relations: {
+        user: true,
+      },
+    });
   }
 }

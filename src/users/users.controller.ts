@@ -5,12 +5,14 @@ import { UsersService } from './users.service';
 import { AuthService } from './auth.service';
 import { Serialize } from 'interceptors/serialize.interceptor';
 import { UserDto } from './dto/user.dto';
+import { PostsService } from 'posts/posts.service';
+import { Post as _Post } from 'posts/post.entity';
 
 @Controller('auth')
 export class UsersController {
   constructor(
     private usersService: UsersService,
-    private authService: AuthService,
+    private authService: AuthService, // private postsService: PostsService,
   ) {}
 
   @Post('/signup')
@@ -37,4 +39,10 @@ export class UsersController {
   async getUserById(@Param('id') id: string): Promise<User> {
     return this.usersService.getUserById(id);
   }
+
+  //test
+  // @Get('/:id/posts')
+  // async getPostsByUserId(@Param('id') id: string): Promise<_Post[]> {
+  //   return this.postsService.getPostsByUserId(id);
+  // }
 }

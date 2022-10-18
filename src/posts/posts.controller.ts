@@ -56,10 +56,6 @@ export class PostsController {
     @GetUser() currentUser: User,
   ): Promise<_Post> {
     const post = await this.postsService.getPostById(id);
-    // console.log(req.user);
-    // console.log('user id: ', currentUser.id);
-    // console.log('post user id: ', post);
-
     if (currentUser.id !== post.user.id) {
       throw new UnauthorizedException(`Must be post's owner to edit`);
     }

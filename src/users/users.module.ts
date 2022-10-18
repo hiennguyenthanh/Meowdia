@@ -9,6 +9,8 @@ import { JwtStrategy } from './jwt.strategy';
 import { AuthService } from './auth.service';
 import { LocalStrategy } from './local.strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { PostsService } from 'posts/posts.service';
+import { PostsModule } from 'posts/posts.module';
 
 @Module({
   imports: [

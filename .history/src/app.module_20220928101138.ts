@@ -4,7 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { RolesGuard } from 'guards/roles.guard';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { CommentsModule } from './comments/comments.module';
 @Module({
   imports: [
     PostsModule,
@@ -27,7 +26,6 @@ import { CommentsModule } from './comments/comments.module';
     ConfigModule.forRoot({
       envFilePath: [`.env.stage.${process.env.STAGE}`],
     }),
-    CommentsModule,
   ],
   controllers: [],
 
